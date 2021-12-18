@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-md-3">
+    <button class="btn btn-primary" (click)="increment()">Add</button>
+  </div>
+  <div class="col-md-3">
+    <button class="btn btn-secondary" (click)="decrement()">Minus</button>
+  </div>
+  <div class="col-md-3">
+    <button class="btn btn-danger" (click)="reset()">Reset</button>
+  </div>
+</div>
+<div class="row" style="margin-top:25px;">
+  <div class="col-md-3">
+    <h4>{{ channelName | async }}</h4>
+    <input type="number" [(ngModel)]="counterNumber" />
+    <button class="btn btn-primary" (click)="addToCounter()">Add</button>
+    <button (click)="changeText()">Change Text</button>
+  </div>
+</div>

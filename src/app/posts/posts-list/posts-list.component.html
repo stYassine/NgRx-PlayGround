@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-12">
-    <h3>Posts List</h3>
+    <h3>Posts List {{ count$ | async }} </h3>
     <a href="#" [routerLink]="['/posts/create']">Add Post</a>
   </div>
 </div>
@@ -23,6 +23,7 @@
           <td>{{ post.description }}</td>
           <td><a class="btn btn-info" [routerLink]="['/posts', 'edit', post.id]">Edit</a> </td>
           <td><button class="btn btn-danger" (click)="onPostDelete(post.id)">Delete</button></td>
+          <td><a class="btn btn-info" [routerLink]="['/posts', 'details', post.id]">Details</a> </td>
         </tr>
       </tbody>
     </table>

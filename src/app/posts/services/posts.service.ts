@@ -26,6 +26,10 @@ export class PostsService {
     );
   }
 
+  public getSinglePost(id: string): Observable<Post>{
+    return this.httpClient.get<Post>(`https://vue-completecourse.firebaseio.com/posts/${id}.json`);
+  } 
+
   public addPost(post: Post): Observable<{name: string}>{
     return this.httpClient.post<{name: string}>('https://vue-completecourse.firebaseio.com/posts.json', post);
   }

@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/services/auth.guard';
-import { CounterComponent } from './counter/counter/counter.component';
+
+/// Components
 import { HomeComponent } from './home/home.component';
-import { AddPostComponent } from './posts/add-post/add-post.component';
-import { EditPostComponent } from './posts/edit-post/edit-post.component';
-import { PostsListComponent } from './posts/posts-list/posts-list.component';
+import { SinglePostComponent } from './posts/single-post/single-post.component';
 
 export const routes: Routes = [
   {
@@ -16,7 +15,11 @@ export const routes: Routes = [
   },
   {
     path: 'posts', loadChildren: () => import('./posts/posts.module').then(m => m.PostsModule),
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
+  },
+  {
+    path: 'posts/details/:id',
+    component: SinglePostComponent
   },
   {
     path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)

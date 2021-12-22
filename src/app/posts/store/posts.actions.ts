@@ -1,3 +1,4 @@
+import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
 import { Post } from 'src/app/models/posts.model';
 
@@ -12,7 +13,11 @@ enum PostsActionsTypes{
   UpdatePostSuccess = '[Posts Page] Update Post Success',
   
   DeletePost = '[Posts Page] Delete Post',
-  DeletePostSuccess = '[Posts Page] Delete Post Success'
+  DeletePostSuccess = '[Posts Page] Delete Post Success',
+
+  /// Others
+  DummyAction = '[Dummy Action] just to Call when needing to return an Action',
+
 }
 
 /// Load
@@ -39,7 +44,7 @@ export const updatePost = createAction(
 );
 export const updatePostSuccess = createAction(
   PostsActionsTypes.UpdatePostSuccess, 
-  props<{post: Post}>()
+  props<{post: Update<Post> }>()
 );
 
 // Delete
@@ -52,3 +57,7 @@ export const deletePostSuccess = createAction(
   props<{id: string}>()
 );
 
+/// Dummy Action, just to return an Action
+export const dummyAction = createAction(
+  PostsActionsTypes.DummyAction
+);

@@ -13,6 +13,7 @@ import { PostsListComponent } from './posts-list/posts-list.component';
 import { AddPostComponent } from './add-post/add-post.component';
 import { EditPostComponent } from './edit-post/edit-post.component';
 import { EffectsModule } from '@ngrx/effects';
+import { SinglePostComponent } from './single-post/single-post.component';
 
 export const routes: Routes = [
   {
@@ -32,7 +33,8 @@ export const routes: Routes = [
   declarations: [
     PostsListComponent,
     AddPostComponent,
-    EditPostComponent
+    EditPostComponent,
+    SinglePostComponent
   ],
   imports: [
     CommonModule,

@@ -53,9 +53,9 @@ import { CustomSerializer } from './store/router/custom-serializer';
       serializer: CustomSerializer
     })
   ],
-  providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true}
-  ],
+  // providers: [
+  //   {provide: HTTP_INTERCEPTORS, useClass: AuthTokenInterceptor, multi: true}
+  // ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

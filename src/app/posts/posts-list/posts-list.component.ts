@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { getPosts } from '../../posts/store/posts.selectors';
+import { getCount, getPosts } from '../../posts/store/posts.selectors';
 import { deletePost, loadPosts } from '../../posts/store/posts.actions';
 import { AppState } from 'src/app/store/app.state';
 import { Post } from 'src/app/models/posts.model';
@@ -13,11 +13,13 @@ import { Post } from 'src/app/models/posts.model';
 })
 export class PostsListComponent implements OnInit {
   public posts$: Observable<Post[]>;
+  public count$: Observable<Number>;
 
   constructor(public store: Store<AppState>) { }
 
   ngOnInit(): void {
     this.posts$ = this.store.pipe(select(getPosts));
+    this.count$ = this.store.pipe(select(getCount));
     this.store.dispatch(loadPosts());
   }
 

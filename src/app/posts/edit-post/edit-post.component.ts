@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 /// NgRx
@@ -7,7 +7,7 @@ import { Post } from 'src/app/models/posts.model';
 import { updatePost } from '../../posts/store/posts.actions';
 import { getPostById } from '../../posts/store/posts.selectors';
 import { AppState } from 'src/app/store/app.state';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 
 @Component({
@@ -15,19 +15,22 @@ import { Observable } from 'rxjs';
   templateUrl: './edit-post.component.html',
   styleUrls: ['./edit-post.component.css']
 })
-export class EditPostComponent implements OnInit {
-  form: FormGroup;
-  public selectedPost: Post ={
+export class EditPostComponent implements OnInit, OnDestroy {
+  public form: FormGroup;
+  public  selectedPost: Post ={
     id: '',
     title: '',
     description: ''
   };
+  public selectedPostSubscription: Subscription;
 
   constructor(
     public store: Store<AppState>,
     private activatedRoute: ActivatedRoute,
     private router: Router
     ) { }
+
+  
 
   ngOnInit(): void {
     this.initForm();
@@ -64,16 +67,37 @@ export class EditPostComponent implements OnInit {
   }
 
   public getSelectedPost(){
-    this.activatedRoute.paramMap.subscribe((params) => {
-      const id = params.get('id');
-      if(id){
-        this.store.pipe(select(getPostById, {id})).subscribe(post => {
-          this.selectedPost['id'] = post.id;
-          this.selectedPost['title'] = post.title;
-          this.selectedPost['description'] = post.description;
-        });
-      }
-    });
+    this.selectedPostSubscription = this.store.select(getPostById)
+      .subscribe((post) => {
+        if(post){ 
+          console.log('Horsy : ',post);
+          this.selectedPost.title = post.title;
+          this.selectedPost.description = post.description;
+          this.selectedPost.id = post.id;
+          // this.form.patchValue({
+          //   title: post.title,
+          //   description: post.description,
+          // });
+        }
+      });
+
+    /// Without NgRx-Router
+    // this.activatedRoute.paramMap.subscribe((params) => {
+    //   const id = params.get('id');
+    //   if(id){
+    //     this.store.pipe(select(getPostById, {id})).subscribe(post => {
+    //       this.selectedPost['id'] = post.id;
+    //       this.selectedPost['title'] = post.title;
+    //       this.selectedPost['description'] = post.description;
+    //     });
+    //   }
+    // });
+  }
+
+  ngOnDestroy(): void {
+    if(this.selectedPostSubscription){
+      this.selectedPostSubscription.unsubscribe();
+    }
   }
 
 }
